@@ -16,20 +16,20 @@ def serstatu( sername , warings = 800 , criticals = 1000 ):
   if options.critical != None:
     criticals = options.critical
 
-  thepid = str(commands.getoutput("source /etc/profile && jps -l|grep -v grep | grep %s | awk '{print $1}'" %sername))
+  thepid = str(commands.getoutput("ps -ef | grep %s | grep -v grep | grep -v check_local_service.py | awk '{print $2}'" %sername))
   if thepid == "":
     print("ERROR,the %s service is down" %sername)
     sys.exit(2)
   else:
     thecon = int(commands.getoutput("netstat -antp | grep -v grep | grep -v LISTEN | grep %s | wc -l" %thepid))
     if 0 < thecon < warings:
-      print("OK , the %s pid:%s connect %d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
+      print("OK , the %s pid:%s connect:%d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
       sys.exit(0)
     elif warings <= thecon < criticals:
-      print("WARING , the %s pid:%s connect %d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
+      print("WARING , the %s pid:%s connect:%d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
       sys.exit(1)
     elif thecon >= criticals:
-      print("CRITICAL , the %s pid:%s connect %d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
+      print("CRITICAL , the %s pid:%s connect:%d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
       sys.exit(2)
     else:
       print('UNKNOWN STATUS')
