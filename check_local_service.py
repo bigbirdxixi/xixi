@@ -21,7 +21,7 @@ def serstatu( sername , warings = 800 , criticals = 1000 ):
     print("ERROR,the %s service is down" %sername)
     sys.exit(2)
   else:
-    thecon = int(commands.getoutput("netstat -antp | grep -v grep | grep -v LISTEN | grep %s | wc -l" %thepid))
+    thecon = int(commands.getoutput("sudo netstat -antp | grep -v grep | grep -v LISTEN | grep %s | wc -l" %thepid))
     if 0 < thecon < warings:
       print("OK , the %s pid:%s connect:%d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
       sys.exit(0)
