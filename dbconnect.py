@@ -9,7 +9,7 @@ dbcursor = dbconnect.cursor()
 dbcursor.execute(r'select password from user where id = ? ' , ('0000000' ,))
 valu = dbcursor.fetchone()
 if hspwd.hexdigest() in valu:
-  print('yes')
+  print('valu')
 dbcursor.close()
 dbconnect.commit()
 dbconnect.close()

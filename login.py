@@ -14,7 +14,7 @@ try:
 	valu = dbcursor.fetchone()
 	#登录判断
 	if hspwd.hexdigest() in valu:
-		print('mygod,wellcome!!')
+		print('mygod,wellcome!!',str(valu))
 finally:
 	#关闭数据库连接
 	dbcursor.close()
