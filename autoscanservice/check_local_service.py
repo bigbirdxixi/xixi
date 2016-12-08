@@ -10,19 +10,14 @@ parser.add_option("-c", "--critical",action="store", type="int",dest="critical",
 (options, args) = parser.parse_args()
 
 def serstatu( sername , warings = 800 , criticals = 1000 ):
-  if options.waring != None:
-    warings = options.waring
 
-  if options.critical != None:
-    criticals = options.critical
-
-  thepid = str(commands.getoutput("ps -ef | grep %s | grep -v grep | grep -v check_local_service.py | awk '{print $2}'" %sername))
+  thepid = str(commands.getoutput("sudo jps -l | grep %s | grep -v grep | grep -v check_local_service.py | awk '{print $1}'" %sername))
   if thepid == "":
     print("ERROR,the %s service is down" %sername)
     sys.exit(2)
   else:
     thecon = int(commands.getoutput("sudo netstat -antp | grep -v grep | grep -v LISTEN | grep %s | wc -l" %thepid))
-    if 0 < thecon < warings:
+    if 0 <= thecon < warings:
       print("OK , the %s pid:%s connect:%d | thecon=%d;%d;%d;0" %(sername,thepid,thecon,thecon,warings,criticals))
       sys.exit(0)
     elif warings <= thecon < criticals:
