@@ -15,7 +15,7 @@ def registser(host,port,sername):
 def getsername():
   '获取服务名，返回服务名清单sername与tomcat站点端口对应字典a'
   sername = commands.getoutput(r"sudo jps -l | grep -v grep | grep com. | awk '{print $2}'").split('\n')
-  portpid = commands.getoutput(r"sudo netstat -ntpl | grep -E '8\w{2}0' | awk -F ':|/' '{print $4,$(NF-1)}' | awk '{print $1,$4}'").split('\n')
+  portpid = commands.getoutput(r"sudo netstat -ntpl | grep -E '8\w{2}0\b' | awk -F ':|/' '{print $4,$(NF-1)}' | awk '{print $1,$4}'").split('\n')
   a = {}
   for n in portpid:
     sitename = 'site_' + commands.getoutput(r"sudo ps -ef | grep -vE 'grep|autoscan.py' | grep %s | awk -F '/' '{print $(NF-1)}'" %n.split(' ')[1])
