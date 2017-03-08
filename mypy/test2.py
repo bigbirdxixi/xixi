@@ -92,7 +92,15 @@ try:
         while column < len(digits):
             number = int(digits[column])
             digit = Digits[number]
-            line += digit[row] + "  "
+#            line += digit[row] + "  "
+            cc = 0
+            while cc < 7:
+                if digit[row][cc] is not "*":
+                    line += digit[row][cc]
+                else:
+                    line += str(number)
+                cc +=1
+            line += "  "
             column += 1
         print(line)
         row += 1
