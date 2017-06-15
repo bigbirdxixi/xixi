@@ -5,6 +5,6 @@ inotifywait -mr --timefmt '%Y-%m-%d %T' --format '%T %Xe %w %f' --exclude "swp|4
 do
     EVENTS=`echo $dir | awk -F '/' '{print $1}'`
     if [ -n $EVENTS ] ; then
-        rsync -avz --delete --password-file=./rsyncd.secrets $BASEDIR/ nginx@$DESTIP::nginxconf/
+        rsync -avz --delete --password-file=/opt/cfgsync/rsyncd.secrets $BASEDIR/ nginx@$DESTIP::nginxconf/
     fi  
 done
